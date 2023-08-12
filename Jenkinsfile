@@ -15,6 +15,7 @@ pipeline {
             steps {
                 echo 'Building base image for api-tests..'
                 sh "docker build --no-cache -t mtararujs/api-tests-base:latest . -f Dockerfile.base"
+                sh "docker login -u mtararujs -p randompass"
                 sh "docker push mtararujs/api-tests-base:latest"
             }
         }
@@ -22,6 +23,7 @@ pipeline {
             steps {
                 echo 'Building runner image for api-tests'
                 sh "docker build --no-cache -t mtararujs/api-tests-runner:latest . -f Dockerfile.runner"
+                sh "docker login -u mtararujs -p randompass"
                 sh "docker push mtararujs/api-tests-runner:latest"
             }
         }
