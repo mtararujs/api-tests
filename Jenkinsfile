@@ -5,6 +5,12 @@ pipeline {
     }
     stages {
         stage('docker-build-test-base') {
+            when {
+                anyOf {
+                    changeSet 'Gemfile'
+                    changeSet 'Dockerfile.base'
+                }
+            }
             steps {
                 echo 'Building base image for api-tests..'
                 sh "docker build --no-cache -t mtararujs/api-tests-base . -f Dockerfile.base"
