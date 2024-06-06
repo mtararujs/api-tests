@@ -1,10 +1,14 @@
 require 'test-unit'
 require "minitest/autorun"
+require "test/unit/assertions"
+include Test::Unit::Assertions
+require 'jsonpath'
 
-
-def assert_message_contains(message)
-  # assert_equal(message, @test_step.response.to_s, "Message content does not match. Expected #{message}, got #{@test_step.response}")
-  assert_match(/#{message}/, @test_step.response.to_s)
+def assert_jsonpath_contains(jsonpath, assertion_string)
+  parsed_json = JSON.parse(@test_step.response.to_s)
+  jsonpath_result = JsonPath.on(parsed_json, jsonpath)
+  contains_assertion = jsonpath_result.any? { |result| result.to_s.include?(assertion_string) }
+  assert contains_assertion, "Expected JSONPath '#{jsonpath}' to contain '#{assertion_string}', but it did not."
 end
 
 def assert_http_code(code)
