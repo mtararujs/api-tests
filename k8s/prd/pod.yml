@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-tests-prd
+spec:
+  containers:
+  - name: api-tests-prd
+    image: mtararujs/api-test-runner
+    command: ["cucumber"]
+    args: ["PLATFORM=PRD"]

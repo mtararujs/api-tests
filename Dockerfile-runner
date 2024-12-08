@@ -1,0 +1,4 @@
+FROM api-test-base
+
+COPY features features
+COPY smoke_tests.sh ./
